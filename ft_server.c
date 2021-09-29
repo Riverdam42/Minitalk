@@ -5,54 +5,49 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: kkawano <kkawano@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/09/23 20:00:59 by kkawano           #+#    #+#             */
-/*   Updated: 2021/09/28 20:50:04 by kkawano          ###   ########.fr       */
+/*   Created: 2021/09/30 00:02:00 by kkawano           #+#    #+#             */
+/*   Updated: 2021/09/30 01:38:19 by kkawano          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+#define BUFFER_SIZE 1024
 
-static int	end_of_transmission(unsigned char *buf, int index, siginfo_t *info)
+char uc;
+int count;　//bitの数
+int letters;　//bufに収納する文字の数
+
+//シグナルハンドラ(USR1動作を決める)
+//シグナルハンドラ(USR1動作を決める)
+static void signal_one_handler()
 {
-	ft_putendl_fd((char *)buf, 1);
-	ft_bzero(buf, index);
-	kill(info->si_pid, SIGUSR2);
-	return (0);
+	uc <<= 1;
+	count++;
 }
 
-static void	signal_handler(int sig, siginfo_t *info, void *ucontext)
+static void signal_two_handler()
 {
-	static unsigned char	buf[33];
-	static int				index;
-	static int				bit;
-	static unsigned char	uc;
-
-	(void)ucontext;
-	if (sig == SIGUSR2)
-		uc |= (1 << bit);
-	bit++;
-	if (bit == 8)
-	{
-		if (index > 33 - 1)
-			print_error("BUF_OVERFLOW");
-		if (uc == 0)
-			index = end_of_transmission(buf, index, info);
-		else
-			buf[index++] = uc;
-		bit = 0;
-		uc = 0;
-	}
+	uc += 1;
+	uc <<= 1;
+	count++;
+	if (count == 32)
+	buf[letters++] = uc;
 }
+32回受信するごとにbufに格納する
+
+bufを出力する
 
 int	main(void)
 {
 	int       pid_client;
-	struct sigaction act;
+	struct sigaction act1;
+	struct sigaction act2;
 
     pid_client = getpid();
     ft_putnbr_fd(pid_client, 1);
     write(1, "\n", 1);
-	act.sa_handler = &signal_handler; //handlerを確認する
+	act.sa_handler = &signal_handler;
+	sigaction(SIGUSR1用);
+	sigaction(SIGUSR2用);
     while (1)
 		;
 	return (0);

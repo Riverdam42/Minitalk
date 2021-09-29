@@ -6,55 +6,46 @@
 /*   By: kkawano <kkawano@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/23 20:00:44 by kkawano           #+#    #+#             */
-/*   Updated: 2021/09/28 14:03:09 by kkawano          ###   ########.fr       */
+/*   Updated: 2021/09/30 01:39:33 by kkawano          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
 
-static void	signal_handler(int signal)
+void	send_str(char *str, int pid_server)
 {
-	if (signal == SIGUSR1)
-		flag = 1;
-}
-
-void	send_str(char *str, int pid)
-{
-	int32_t	bit;
-	int		i;
+	int32_t		bit;
+	int			i;
+	int			x;
 
 	while (*str)
 	{
 		bit = (unsigned char)*str++;
-		i = -1;
-		while (++i < 32)
+		i = 0;
+		x = 32;
+		while (i < 32)
 		{
-			if ((bit & 1) == 0)
+			if ((bit & (1 << --x)) == 0)
 			{
-				if (kill(pid, SIGUSR1) == -1)
+				if (kill(pid_server, SIGUSR1) == -1)
 					exit(print_error("KILL_ERROR"));
 			}
 			else
 			{
-				if (kill(pid, SIGUSR2) == -1)
+				if (kill(pid_server, SIGUSR2) == -1)
 					exit(print_error("KILL_ERROR"));
 			}
-			bit = bit >> 1;
-			while (flag == 0)
-				;
-			flag = 0;
+			// bit >>= 1;
+			pause();
+			i++;
 		}
 	}
 }
 
 int	main(int argc, char **argv)
 {
-	int				pid_server;
-	struct sigaction	act;
+	int					pid_server;
 
-	act.sa_handler = &signal_handler;
-	if (sigaction(SIGUSR1, &act, NULL) == -1)
-		exit(print_error("SIGNAL_ERROR"));
 	if (argc != 3)
 		return (print_error("INVALID_ARGUMENT"));
 	pid_server = ft_atoi(argv[1]);
