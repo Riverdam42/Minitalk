@@ -1,3 +1,4 @@
+NAME = minitalk
 SERVER_NAME = server
 CLIENT_NAME = client
 LIBFT = ./libft/
