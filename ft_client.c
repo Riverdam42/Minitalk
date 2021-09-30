@@ -6,7 +6,7 @@
 /*   By: kkawano <kkawano@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/23 20:00:44 by kkawano           #+#    #+#             */
-/*   Updated: 2021/09/30 01:39:33 by kkawano          ###   ########.fr       */
+/*   Updated: 2021/09/30 16:52:03 by kkawano          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ void	send_str(char *str, int pid_server)
 	while (*str)
 	{
 		bit = (unsigned char)*str++;
-		i = 0;
+		i = -1;
 		x = 32;
-		while (i < 32)
+		while (++i < 32)
 		{
 			if ((bit & (1 << --x)) == 0)
 			{
@@ -35,9 +35,8 @@ void	send_str(char *str, int pid_server)
 				if (kill(pid_server, SIGUSR2) == -1)
 					exit(print_error("KILL_ERROR"));
 			}
-			// bit >>= 1;
 			pause();
-			i++;
+			usleep(60);
 		}
 	}
 }
