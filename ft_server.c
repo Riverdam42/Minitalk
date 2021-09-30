@@ -6,7 +6,7 @@
 /*   By: kkawano <kkawano@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/30 00:02:00 by kkawano           #+#    #+#             */
-/*   Updated: 2021/09/30 16:55:01 by kkawano          ###   ########.fr       */
+/*   Updated: 2021/10/01 00:15:08 by kkawano          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ static void signal_one_handler(int sig, siginfo_t *info, void *ucontext) //bit =
 	g_info.count++;
 	if (kill(info->si_pid, SIGUSR1) == -1)
 		exit(print_error("KILL_ERROR"));
+	write(1, &(g_info.count), 1);
 }
 
 static void signal_two_handler(int sig, siginfo_t *info, void *ucontext) //bit = 1
@@ -35,7 +36,7 @@ static void signal_two_handler(int sig, siginfo_t *info, void *ucontext) //bit =
 		exit(print_error("KILL_ERROR"));
 }
 
-static void main_iterator()
+static void main_iterator(void)
 {
 	while (1)
 	{
@@ -50,23 +51,27 @@ static void main_iterator()
 	}
 }
 
-int	main(void)
+static void set_signal(void)
 {
 	struct sigaction act1;
 	struct sigaction act2;
-	int		pid_client;
 
-    pid_client = getpid();
-    ft_putnbr_fd(pid_client, 1);
-    write(1, "\n", 1);
 	act1.sa_sigaction = &signal_one_handler;
 	act2.sa_sigaction = &signal_two_handler;
-	act1.sa_flags = SA_SIGINFO; //ぷろせすIDの情報を与える
+	act1.sa_flags = SA_SIGINFO;
 	act2.sa_flags = SA_SIGINFO;
-	if (sigaction(SIGUSR1, &act1, NULL) == -1)
+	sigemptyset(&act1.sa_mask);
+	sigemptyset(&act2.sa_mask);
+	if (sigaction(SIGUSR1, &act1, NULL) == -1
+			|| sigaction(SIGUSR2, &act2, NULL) == -1)
 		exit(print_error("SIGACTION_ERROR"));
-	if (sigaction(SIGUSR2, &act2, NULL) == -1)
-		exit(print_error("SIGACTION_ERROR"));
+}
+
+int	main(void)
+{
+	set_signal();
+    ft_putnbr_fd(getpid(), 1);
+    write(1, "\n", 1);
 	main_iterator();
 	return (0);
 }
