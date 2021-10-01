@@ -6,7 +6,7 @@
 /*   By: kkawano <kkawano@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/01 15:53:42 by kkawano           #+#    #+#             */
-/*   Updated: 2021/10/01 21:23:06 by kkawano          ###   ########.fr       */
+/*   Updated: 2021/10/02 00:52:28 by kkawano          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <stdlib.h>
 # include "libft/libft.h"
 
-# define BUFFER_SIZE 10
+# define BUFFER_SIZE 1024
 # define ERROR -1
 
 typedef struct s_info

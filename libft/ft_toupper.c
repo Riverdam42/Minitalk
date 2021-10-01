@@ -1,33 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minitalk_bonus.h                                   :+:      :+:    :+:   */
+/*   ft_toupper.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kkawano <kkawano@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/01 21:15:12 by kkawano           #+#    #+#             */
-/*   Updated: 2021/10/02 00:52:35 by kkawano          ###   ########.fr       */
+/*   Created: 2021/10/02 00:44:54 by kkawano           #+#    #+#             */
+/*   Updated: 2021/10/02 00:44:56 by kkawano          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINITALK_BONUS_H
-# define MINITALK_BONUS_H
+#include "libft.h"
 
-# include <signal.h>
-# include <sys/types.h>
-# include <unistd.h>
-# include <stdlib.h>
-# include "libft/libft.h"
-
-# define BUFFER_SIZE 1024
-# define ERROR -1
-
-typedef struct s_info
+int	ft_toupper(int c)
 {
-	char			buf[BUFFER_SIZE];
-	unsigned char	uc;
-	int				count;
-	int				letter;
-}				t_info;
+	if ('a' <= c && c <= 'z')
+		return (c - 32);
+	else
+		return (c);
+}
 
-#endif
+/*
+#include <stdio.h>
+
+int main(void)
+{
+	char a = 'k';
+	char b = 'K';
+	char c = '*';
+
+	printf("75 ->%d\n",ft_toupper(a));
+	printf("107 ->%d\n",ft_toupper(b));
+	printf("74 ->%d\n",ft_toupper(c));
+}
+*/

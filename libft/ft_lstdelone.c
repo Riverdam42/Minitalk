@@ -1,33 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minitalk_bonus.h                                   :+:      :+:    :+:   */
+/*   ft_lstdelone.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kkawano <kkawano@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/01 21:15:12 by kkawano           #+#    #+#             */
-/*   Updated: 2021/10/02 00:52:35 by kkawano          ###   ########.fr       */
+/*   Created: 2021/08/03 23:51:09 by kkawano           #+#    #+#             */
+/*   Updated: 2021/08/14 20:20:10 by kkawano          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINITALK_BONUS_H
-# define MINITALK_BONUS_H
+#include "libft.h"
 
-# include <signal.h>
-# include <sys/types.h>
-# include <unistd.h>
-# include <stdlib.h>
-# include "libft/libft.h"
-
-# define BUFFER_SIZE 1024
-# define ERROR -1
-
-typedef struct s_info
+void	ft_lstdelone(t_list *lst, void (*del)(void *))
 {
-	char			buf[BUFFER_SIZE];
-	unsigned char	uc;
-	int				count;
-	int				letter;
-}				t_info;
-
-#endif
+	if (!lst || !del)
+		return ;
+	del(lst->content);
+	free(lst);
+}

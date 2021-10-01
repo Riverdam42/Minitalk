@@ -1,33 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minitalk_bonus.h                                   :+:      :+:    :+:   */
+/*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kkawano <kkawano@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/01 21:15:12 by kkawano           #+#    #+#             */
-/*   Updated: 2021/10/02 00:52:35 by kkawano          ###   ########.fr       */
+/*   Created: 2021/07/12 16:10:38 by kkawano           #+#    #+#             */
+/*   Updated: 2021/08/17 17:01:20 by kkawano          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINITALK_BONUS_H
-# define MINITALK_BONUS_H
+#include "libft.h"
 
-# include <signal.h>
-# include <sys/types.h>
-# include <unistd.h>
-# include <stdlib.h>
-# include "libft/libft.h"
-
-# define BUFFER_SIZE 1024
-# define ERROR -1
-
-typedef struct s_info
+char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
-	char			buf[BUFFER_SIZE];
-	unsigned char	uc;
-	int				count;
-	int				letter;
-}				t_info;
+	char	*p;
+	size_t	len;
+	size_t	i;
 
-#endif
+	if (!s || !f)
+		return (NULL);
+	len = ft_strlen(s);
+	p = malloc(sizeof(char ) * (len + 1));
+	if (!p)
+		return (NULL);
+	i = 0;
+	while (s[i])
+	{
+		p[i] = f(i, s[i]);
+		i++;
+	}
+	p[i] = '\0';
+	return (p);
+}

@@ -1,33 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minitalk_bonus.h                                   :+:      :+:    :+:   */
+/*   ft_lstlast.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kkawano <kkawano@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/01 21:15:12 by kkawano           #+#    #+#             */
-/*   Updated: 2021/10/02 00:52:35 by kkawano          ###   ########.fr       */
+/*   Created: 2021/08/03 23:06:58 by kkawano           #+#    #+#             */
+/*   Updated: 2021/08/16 20:36:33 by kkawano          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINITALK_BONUS_H
-# define MINITALK_BONUS_H
+#include "libft.h"
 
-# include <signal.h>
-# include <sys/types.h>
-# include <unistd.h>
-# include <stdlib.h>
-# include "libft/libft.h"
-
-# define BUFFER_SIZE 1024
-# define ERROR -1
-
-typedef struct s_info
+t_list	*ft_lstlast(t_list *lst)
 {
-	char			buf[BUFFER_SIZE];
-	unsigned char	uc;
-	int				count;
-	int				letter;
-}				t_info;
-
-#endif
+	if (!lst)
+		return (NULL);
+	while (lst->next != NULL)
+		lst = lst->next;
+	return (lst);
+}

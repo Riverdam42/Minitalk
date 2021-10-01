@@ -1,33 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minitalk_bonus.h                                   :+:      :+:    :+:   */
+/*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kkawano <kkawano@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/01 21:15:12 by kkawano           #+#    #+#             */
-/*   Updated: 2021/10/02 00:52:35 by kkawano          ###   ########.fr       */
+/*   Created: 2021/10/02 00:45:17 by kkawano           #+#    #+#             */
+/*   Updated: 2021/10/02 00:45:21 by kkawano          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINITALK_BONUS_H
-# define MINITALK_BONUS_H
+#include "libft.h"
 
-# include <signal.h>
-# include <sys/types.h>
-# include <unistd.h>
-# include <stdlib.h>
-# include "libft/libft.h"
-
-# define BUFFER_SIZE 1024
-# define ERROR -1
-
-typedef struct s_info
+void	ft_bzero(void *s, size_t n)
 {
-	char			buf[BUFFER_SIZE];
-	unsigned char	uc;
-	int				count;
-	int				letter;
-}				t_info;
+	ft_memset(s, 0, n);
+}
 
-#endif
+/*
+#include <stdio.h>
+
+int main(void)
+{
+	char tab[100];
+	printf("%d\n", ft_bzero(tab, 88));
+	return (0);
+}
+*/

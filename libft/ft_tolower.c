@@ -1,33 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minitalk_bonus.h                                   :+:      :+:    :+:   */
+/*   ft_tolower.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kkawano <kkawano@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/01 21:15:12 by kkawano           #+#    #+#             */
-/*   Updated: 2021/10/02 00:52:35 by kkawano          ###   ########.fr       */
+/*   Created: 2021/10/02 00:46:39 by kkawano           #+#    #+#             */
+/*   Updated: 2021/10/02 00:46:41 by kkawano          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINITALK_BONUS_H
-# define MINITALK_BONUS_H
+#include "libft.h"
 
-# include <signal.h>
-# include <sys/types.h>
-# include <unistd.h>
-# include <stdlib.h>
-# include "libft/libft.h"
-
-# define BUFFER_SIZE 1024
-# define ERROR -1
-
-typedef struct s_info
+int	ft_tolower(int c)
 {
-	char			buf[BUFFER_SIZE];
-	unsigned char	uc;
-	int				count;
-	int				letter;
-}				t_info;
+	if ('A' <= c && c <= 'Z')
+		return (c + 32);
+	else
+		return (c);
+}
 
-#endif
+/*
+#include <stdio.h>
+
+int main(void)
+{
+	char a = 'k';
+	char b = 'K';
+	char c = '*';
+
+	printf("%c\n",ft_tolower(a));
+	printf("%c\n",ft_tolower(b));
+	printf("%c\n",ft_tolower(c));
+}
+*/
