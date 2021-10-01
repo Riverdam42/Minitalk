@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minitalk.h                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kkawano <kkawano@student.42tokyo.j>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/10/01 15:53:42 by kkawano           #+#    #+#             */
+/*   Updated: 2021/10/01 15:53:44 by kkawano          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MINITALK_H
 # define MINITALK_H
 
@@ -10,14 +22,12 @@
 # define BUFFER_SIZE 10
 # define ERROR -1
 
-int	print_error(char *str);
-
 typedef struct s_info
 {
-	char buf[BUFFER_SIZE];
+	char			buf[BUFFER_SIZE];
 	unsigned char	uc;
-	int			count; //bitの数を数える
-	int			letter; ////bufに収納する文字の数
-} t_info;
+	int				count;
+	int				letter;
+}				t_info;
 
 #endif
