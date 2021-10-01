@@ -1,58 +1,51 @@
-NAME = minitalk
-SERVER_NAME = server
-CLIENT_NAME = client
-LIBFT = libft.a
+NAME		= minitalk
+CLIENT_NAME	= client
+SERVER_NAME	= server
 
-SERVER_SRC = ft_server.c
-CLIENT_SRC = ft_client.c
+CLIENT_SRCS		= ft_client.c
+SERVER_SRCS		= ft_server.c
+CLIENT_OBJS		= $(CLIENT_SRCS:%.c=%.o)
+SERVER_OBJS		= $(SERVER_SRCS:%.c=%.o)
 
-BONUS_SRC = ft_server_bonus.c\
-			ft_client_bonus.c
 
-CLIENT_OBJS = $(CLIENT_SRC:.c=.o)
-SERVER_OBJS = $(SERVER_SRC:.c=.o)
-BONUS_OBJS = $(BONUS_SRC:.c=.o)
+BONUS_CLIENT_SRCS	= ft_client_bonus.c
+BONUS_SERVER_SRCS	= ft_server_bonus.c
+BONUS_CLIENT_OBJS	= $(BONUS_CLIENT_SRCS:%.c=%.o)
+BONUS_SERVER_OBJS	= $(BONUS_SERVER_SRCS:%.c=%.o)
 
-INC = includes
-
-CC = gcc
-
-CFLAGS = -Wall -Wextra -Werror
-
-LIBS = -L./libft -lft
-
-LIBO = ./libft/*.o
-
-LIBA = ./libft/libft.a
-
+CC			= gcc
+CFLAGS		= -Wall -Wextra -Werror
 RM = rm -f
 
-all: $(LIBFT) $(NAME)
+LIBFT_PATH	= ./libft/
 
-$(NAME): $(SERVER_NAME) $(CLIENT_NAME)
+all: $(NAME)
+
+$(NAME): $(CLIENT_OBJS) $(SERVER_OBJS)
+	make -C $(LIBFT_PATH)
+	$(CC) $(CFLAGS) $(CLIENT_OBJS) -L$(LIBFT_PATH) -lft -o $(CLIENT_NAME)
+	$(CC) $(CFLAGS) $(SERVER_OBJS) -L$(LIBFT_PATH) -lft -o $(SERVER_NAME)
 
 %.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $(<:.c=.o)
 
-$(LIBFT):
-	$(MAKE) -C ./libft
-
-$(SERVER_NAME): $(SERVER_OBJS)
-	$(CC) $(CFLAGS) -o $(SERVER_NAME) $(SERVER_OBJS) $(LIBS)
-
-$(CLIENT_NAME): $(CLIENT_OBJS)
-	$(CC) $(CFLAGS) -o $(CLIENT_NAME) $(CLIENT_OBJS) $(LIBS)
+bonus: $(BONUS_CLIENT_OBJS) $(BONUS_SERVER_OBJS)
+	make -C $(LIBFT_PATH)
+	$(CC) $(CFLAGS) $(BONUS_CLIENT_OBJS) -L$(LIBFT_PATH) -lft -o $(CLIENT_NAME)
+	$(CC) $(CFLAGS) $(BONUS_SERVER_OBJS) -L$(LIBFT_PATH) -lft -o $(SERVER_NAME)
 
 clean:
-	$(RM) $(SERVER_OBJS)
+	make clean -C $(LIBFT_PATH)
 	$(RM) $(CLIENT_OBJS)
-	$(RM) $(LIBO)
+	$(RM) $(SERVER_OBJS)
+	$(RM) $(BONUS_CLIENT_OBJS)
+	$(RM) $(BONUS_SERVER_OBJS)
 
 fclean: clean
-	$(RM) $(SERVER_NAME)
+	make fclean -C $(LIBFT_PATH)
 	$(RM) $(CLIENT_NAME)
-	$(RM) $(LIBA)
+	$(RM) $(SERVER_NAME)
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re bonus $(NAME)

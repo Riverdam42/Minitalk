@@ -6,11 +6,16 @@
 /*   By: kkawano <kkawano@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/23 20:00:44 by kkawano           #+#    #+#             */
-/*   Updated: 2021/10/01 15:47:27 by kkawano          ###   ########.fr       */
+/*   Updated: 2021/10/01 22:59:04 by kkawano          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
+
+static void	signal_handler(int sig)
+{
+	(void)sig;
+}
 
 void	send_str(char *str, int pid_server)
 {
@@ -35,6 +40,7 @@ void	send_str(char *str, int pid_server)
 				if (kill(pid_server, SIGUSR2) == ERROR)
 					exit(print_error("KILL_ERROR"));
 			}
+			pause();
 			usleep(100);
 		}
 	}
@@ -43,7 +49,11 @@ void	send_str(char *str, int pid_server)
 int	main(int argc, char **argv)
 {
 	int					pid_server;
+	struct sigaction	act;
 
+	act.sa_handler = &signal_handler;
+	if (sigaction(SIGUSR1, &act, NULL) == ERROR)
+		exit(print_error("SIGACTION_ERROR"));
 	if (argc != 3)
 		return (print_error("INVALID_ARGUMENT"));
 	pid_server = ft_atoi(argv[1]);
