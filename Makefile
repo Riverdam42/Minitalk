@@ -1,7 +1,7 @@
 NAME = minitalk
 SERVER_NAME = server
 CLIENT_NAME = client
-LIBFT = ./libft/
+LIBFT = libft.a
 
 SERVER_SRC = ft_server.c
 CLIENT_SRC = ft_client.c
@@ -18,6 +18,10 @@ CC = gcc
 CFLAGS = -Wall -Wextra -Werror
 
 LIBS = -L./libft -lft
+
+LIBO = ./libft/*.o
+
+LIBA = ./libft/libft.a
 
 RM = rm -f
 
@@ -38,13 +42,15 @@ $(CLIENT_NAME): $(CLIENT_OBJS) $(UTILS_OBJS)
 	$(CC) $(CFLAGS) -o $(CLIENT_NAME) $(CLIENT_OBJS) $(UTILS_OBJS) $(LIBS)
 
 clean:
-	${RM} ${SERVER_OBJS}
-	${RM} ${CLIENT_OBJS}
-	${RM} ${UTILS_OBJS}
+	$(RM) $(SERVER_OBJS)
+	$(RM) $(CLIENT_OBJS)
+	$(RM) $(UTILS_OBJS)
+	$(RM) $(LIBO)
 
 fclean: clean
-	${RM} ${SERVER_NAME}
-	${RM} ${CLIENT_NAME}
+	$(RM) $(SERVER_NAME)
+	$(RM) $(CLIENT_NAME)
+	$(RM) $(LIBA)
 
 re: fclean all
 

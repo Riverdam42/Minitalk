@@ -7,13 +7,14 @@
 # include <stdlib.h>
 # include "libft/libft.h"
 
-#define BUFFER_SIZE 1024
+# define BUFFER_SIZE 10
+# define ERROR -1
 
 int	print_error(char *str);
 
 typedef struct s_info
 {
-	unsigned char buf[BUFFER_SIZE];
+	char buf[BUFFER_SIZE];
 	unsigned char	uc;
 	int			count; //bitの数を数える
 	int			letter; ////bufに収納する文字の数
