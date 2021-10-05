@@ -1,12 +1,14 @@
 NAME		= minitalk
 CLIENT_NAME	= client
 SERVER_NAME	= server
+BONUS_CLIENT_NAME = client_bonus
+BONUS_SERVER_NAME = server_bonus
 LIBFT_NAME = libft/libft.a
 
-CLIENT_SRCS		= ft_client.c
-SERVER_SRCS		= ft_server.c
-CLIENT_OBJS		= $(CLIENT_SRCS:%.c=%.o)
-SERVER_OBJS		= $(SERVER_SRCS:%.c=%.o)
+CLIENT_SRCS	= ft_client.c
+SERVER_SRCS	= ft_server.c
+CLIENT_OBJS	= $(CLIENT_SRCS:%.c=%.o)
+SERVER_OBJS	= $(SERVER_SRCS:%.c=%.o)
 
 BONUS_CLIENT_SRCS	= ft_client_bonus.c
 BONUS_SERVER_SRCS	= ft_server_bonus.c
@@ -38,11 +40,13 @@ force_look :
 %.o : %.c
 	$(CC) $(CFLAGS) -c $< -o $(<:.c=.o)
 
-bonus : $(BONUS_CLIENT_OBJS) $(BONUS_SERVER_OBJS)
-	make -C $(LIBFT_PATH)
-	$(CC) $(CFLAGS) $(BONUS_CLIENT_OBJS) -L$(LIBFT_PATH) -lft -o $(CLIENT_NAME)
-	$(CC) $(CFLAGS) $(BONUS_SERVER_OBJS) -L$(LIBFT_PATH) -lft -o $(SERVER_NAME)
+bonus : $(LIBFT_NAME) $(BONUS_CLIENT_NAME) $(BONUS_SERVER_NAME)
 
+$(BONUS_CLIENT_NAME) : $(BONUS_CLIENT_OBJS) $(LIBFT_NAME)
+	$(CC) $(CFLAGS) $(BONUS_CLIENT_OBJS) -L$(LIBFT_PATH) -lft -o $(BONUS_CLIENT_NAME)
+
+$(BONUS_SERVER_NAME) :$(BONUS_SERVER_OBJS) $(LIBFT_NAME)
+	$(CC) $(CFLAGS) $(BONUS_SERVER_OBJS) -L$(LIBFT_PATH) -lft -o $(BONUS_SERVER_NAME)
 
 clean :
 	make clean -C $(LIBFT_PATH)
