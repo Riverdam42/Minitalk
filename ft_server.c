@@ -6,7 +6,7 @@
 /*   By: kkawano <kkawano@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/30 00:02:00 by kkawano           #+#    #+#             */
-/*   Updated: 2021/10/06 01:01:30 by kkawano          ###   ########.fr       */
+/*   Updated: 2021/10/06 01:45:09 by kkawano          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,18 +34,12 @@ static void	signal_action(int sig, siginfo_t *info, void *ucontext)
 {
 	(void)ucontext;
 	if (sig == SIGUSR1)
-	{
-		g_info.count++;
-		if (g_info.count != 32)
-			g_info.uc <<= 1;
-	}
+		g_info.uc += 0;
 	else if (sig == SIGUSR2)
-	{
 		g_info.uc += 1;
-		g_info.count++;
-		if (g_info.count != 32)
-			g_info.uc <<= 1;
-	}
+	g_info.count++;
+	if (g_info.count != 32)
+		g_info.uc <<= 1;
 	if (kill(info->si_pid, SIGUSR1) == ERROR)
 		exit(print_error("KILL_ERROR"));
 	main_iterator();
