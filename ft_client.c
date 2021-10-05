@@ -6,7 +6,7 @@
 /*   By: kkawano <kkawano@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/23 20:00:44 by kkawano           #+#    #+#             */
-/*   Updated: 2021/10/06 00:51:41 by kkawano          ###   ########.fr       */
+/*   Updated: 2021/10/06 01:15:02 by kkawano          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	send_str(char *str, int pid_server)
 	{
 		bit = (unsigned char)*str++;
 		i = -1;
-		c = 8;
+		c = 32;
 		while (++i < 32)
 		{
 			if ((bit & (1 << --c)) == 0)
