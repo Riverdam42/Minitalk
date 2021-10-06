@@ -59,6 +59,8 @@ fclean : clean
 	make fclean -C $(LIBFT_PATH)
 	$(RM) $(CLIENT_NAME)
 	$(RM) $(SERVER_NAME)
+	$(RM) $(BONUS_CLIENT_NAME)
+	$(RM) $(BONUS_SERVER_NAME)
 
 re : fclean all
 
