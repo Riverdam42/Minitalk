@@ -1,19 +1,12 @@
 NAME		= minitalk
 CLIENT_NAME	= client
 SERVER_NAME	= server
-BONUS_CLIENT_NAME = client_bonus
-BONUS_SERVER_NAME = server_bonus
 LIBFT_NAME = libft/libft.a
 
 CLIENT_SRCS	= ft_client.c
 SERVER_SRCS	= ft_server.c
 CLIENT_OBJS	= $(CLIENT_SRCS:%.c=%.o)
 SERVER_OBJS	= $(SERVER_SRCS:%.c=%.o)
-
-BONUS_CLIENT_SRCS	= ft_client_bonus.c
-BONUS_SERVER_SRCS	= ft_server_bonus.c
-BONUS_CLIENT_OBJS	= $(BONUS_CLIENT_SRCS:%.c=%.o)
-BONUS_SERVER_OBJS	= $(BONUS_SERVER_SRCS:%.c=%.o)
 
 CC			= gcc
 CFLAGS		= -Wall -Wextra -Werror
@@ -40,27 +33,15 @@ force_look :
 %.o : %.c
 	$(CC) $(CFLAGS) -c $< -o $(<:.c=.o)
 
-bonus : $(LIBFT_NAME) $(BONUS_CLIENT_NAME) $(BONUS_SERVER_NAME)
-
-$(BONUS_CLIENT_NAME) : $(BONUS_CLIENT_OBJS) $(LIBFT_NAME)
-	$(CC) $(CFLAGS) $(BONUS_CLIENT_OBJS) -L$(LIBFT_PATH) -lft -o $(BONUS_CLIENT_NAME)
-
-$(BONUS_SERVER_NAME) :$(BONUS_SERVER_OBJS) $(LIBFT_NAME)
-	$(CC) $(CFLAGS) $(BONUS_SERVER_OBJS) -L$(LIBFT_PATH) -lft -o $(BONUS_SERVER_NAME)
-
 clean :
 	make clean -C $(LIBFT_PATH)
 	$(RM) $(CLIENT_OBJS)
 	$(RM) $(SERVER_OBJS)
-	$(RM) $(BONUS_CLIENT_OBJS)
-	$(RM) $(BONUS_SERVER_OBJS)
 
 fclean : clean
 	make fclean -C $(LIBFT_PATH)
 	$(RM) $(CLIENT_NAME)
 	$(RM) $(SERVER_NAME)
-	$(RM) $(BONUS_CLIENT_NAME)
-	$(RM) $(BONUS_SERVER_NAME)
 
 re : fclean all
 
